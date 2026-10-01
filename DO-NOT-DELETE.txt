@@ -1,0 +1,25 @@
+THIS DIRECTORY IS THE LIVE INSTALL TARGET OF A DSH PROFILE BUNDLE.
+DO NOT DELETE, MOVE, OR RENAME IT.
+
+profile : %DSH_HOME%\profiles\desktop
+junction: %DSH_HOME%\profiles\desktop\node_modules\@local\github-mcp
+bundle  : @local/github-mcp  (GitHub MCP tools: mcp__github__*)
+
+Deleting or moving this directory removes every mcp__github__* tool until the
+bundle is reinstalled with:
+
+    plugin_manager  action: install_bundle  target: %USERPROFILE%\dsh-bundles\github-mcp
+
+The install target must live outside every git checkout. It once lived at
+<workspace>\.install\github-mcp and was deleted because that path looked like
+scratch space. The profile's link: dependency then still pointed at the dead
+path, so the plugin row reported
+
+    cannot resolve profile bundle "@local/github-mcp"
+
+even though the bundle itself was fine. Keep this directory where it is.
+
+---
+
+This file lives in the repository on purpose: it is the master copy of the
+marker the install target carries, so a fresh install can restore it.

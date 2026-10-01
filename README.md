@@ -34,12 +34,13 @@ patch layer, not in the shipped configuration.
 > Copy the bundle to a permanent directory outside any checkout, and keep it
 > there. It must survive whatever else you clean up.
 
-1. Create the install directory and copy the two files into it:
+1. Create the install directory and copy the three files into it:
 
    ```
    mkdir C:\Users\<you>\dsh-bundles\github-mcp
    copy package.json      C:\Users\<you>\dsh-bundles\github-mcp\
    copy dsh-github-mcp\cordis.patch.yml C:\Users\<you>\dsh-bundles\github-mcp\
+   copy DO-NOT-DELETE.txt C:\Users\<you>\dsh-bundles\github-mcp\
    ```
 
    The copy needs its own `package.json` whose `dsh.bundle.patch` is
@@ -62,7 +63,11 @@ patch layer, not in the shipped configuration.
 
 **Do not delete the install directory afterwards.** It is not build output: the
 profile reaches the bundle through that junction, so removing it drops every
-`mcp__github__*` tool until you reinstall. Leave a marker file in it saying so.
+`mcp__github__*` tool until you reinstall. The `DO-NOT-DELETE.txt` copied above
+is that marker; keep it beside the patch. When the path does go missing, the
+plugin row does not say "not installed" — it reports
+`cannot resolve profile bundle "@local/github-mcp"` from the stale junction, so
+look at `<profile>\node_modules\@local\github-mcp` first.
 
 ## Choosing a token source
 

@@ -30,10 +30,17 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Local install scratch
+# Local install scratch. The install target must never live inside a checkout:
+# a link: dependency on a working tree puts the live config — token included —
+# one `git add -A` away from being committed.
 .install/
+dsh-bundles/
 
-# Token-bearing patch copies. The committed patch is a token-free template;
-# install from a copy that carries the real token, never from this file.
+# Token-bearing patch copies. The committed patch
+# (dsh-github-mcp/cordis.patch.yml) is a token-free template; the install copy's
+# ./cordis.patch.yml and ./cordis.patch.literal.yml carry the real token, so
+# neither filename may ever surface at this repository's root.
+/cordis.patch.yml
+/cordis.patch.literal.yml
 cordis.patch.local.yml
 *.secret.yml
