@@ -1,0 +1,6 @@
+# Normalize line endings so the same content is committed from any platform.
+* text=auto eol=lf
+
+# Windows-only scripts keep CRLF if any are added later.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

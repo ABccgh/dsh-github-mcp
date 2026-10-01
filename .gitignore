@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Secrets — never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# DeepSeek Harness local state
+.credentials.yaml
+.dsh/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local install scratch
+.install/
+
+# Token-bearing patch copies. The committed patch is a token-free template;
+# install from a copy that carries the real token, never from this file.
+cordis.patch.local.yml
+*.secret.yml

@@ -1,0 +1,19 @@
+{
+  "name": "dsh-github-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Gives DeepSeek Harness the GitHub MCP server as mcp__github__* tools",
+  "license": "MIT",
+  "exports": { "./package.json": "./package.json" },
+  "meta": {
+    "title": "GitHub MCP",
+    "description": "Exposes GitHub's hosted MCP server as mcp__github__* tools for reading repositories, issues and pull requests."
+  },
+  "files": ["README.md"],
+  "dsh": {
+    "bundle": {
+      "patch": "./dsh-github-mcp/cordis.patch.yml"
+    }
+  }
+}

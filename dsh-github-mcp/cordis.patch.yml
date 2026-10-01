@@ -1,0 +1,29 @@
+# GitHub MCP client for DeepSeek Harness
+#
+# Mounts GitHub's hosted MCP server through the shipped MCP bridge, so the model
+# gains tools named `mcp__github__<tool>` (repositories, files, commits, issues,
+# pull requests, code search).
+#
+# TOKEN SOURCE — pick ONE:
+#
+#   1. Literal value (works immediately, but stores the token in this file):
+#        Authorization: Bearer ghp_XXXXXXXXXXXXXXXXXXXX
+#
+#   2. Launcher environment (no secret in this file, needs an app restart):
+#        Authorization: !!js `Bearer ${process.env.GITHUB_TOKEN ?? ''}`
+#
+# A token saved in $DSH_HOME/.credentials.yaml is deliberately NOT materialized
+# into process.env, so form 2 requires a real user-level environment variable.
+# `!!js` expressions are evaluated synchronously, which is why neither form can
+# read the credential store with `await` here.
+- insert:
+    - id: github-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: github
+        transport: streamable-http
+        url: https://api.githubcopilot.com/mcp/
+        headers:
+          Authorization: !!js `Bearer ${process.env.GITHUB_TOKEN ?? ''}`
+        failOnStartupError: true
+        toolCallTimeoutMs: 60000
