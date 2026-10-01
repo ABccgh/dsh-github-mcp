@@ -25,20 +25,44 @@ patch layer, not in the shipped configuration.
 
 ## Install
 
-1. Pick a token source (see below) and put it in
-   `dsh-github-mcp/cordis.patch.yml`.
-2. Install the bundle by absolute path:
+> **Install from a copy, never from this checkout.** `plugin_manager` records the
+> install target as a `link:` dependency and exposes it to the profile as a
+> junction under `<profile>/node_modules/@local/github-mcp`. If that target is
+> your git working tree, the live config — including a literal token, if you use
+> Form 1 — sits inside the repository and can be committed by accident.
+>
+> Copy the bundle to a permanent directory outside any checkout, and keep it
+> there. It must survive whatever else you clean up.
+
+1. Create the install directory and copy the two files into it:
 
    ```
-   plugin_manager  action: install_bundle  target: <abs path to this repo>
+   mkdir C:\Users\<you>\dsh-bundles\github-mcp
+   copy package.json      C:\Users\<you>\dsh-bundles\github-mcp\
+   copy dsh-github-mcp\cordis.patch.yml C:\Users\<you>\dsh-bundles\github-mcp\
+   ```
+
+   The copy needs its own `package.json` whose `dsh.bundle.patch` is
+   `./cordis.patch.yml` (the two files sit side by side).
+
+2. Pick a token source (see below) in that copy's `cordis.patch.yml`.
+
+3. Install the copy by absolute path:
+
+   ```
+   plugin_manager  action: install_bundle  target: C:\Users\<you>\dsh-bundles\github-mcp
    ```
 
    The manager runs package installation and bundle selection itself — do not
    edit the profile's `package.json` or `cordis.patch.yml` by hand, and do not
    run pnpm in the profile directory.
 
-3. Verify: the profile's plugin list shows a row `github-mcp` whose module is
+4. Verify: the profile's plugin list shows a row `github-mcp` whose module is
    `@deepseek-ai/dsh-mcp-client`, and the tool list contains `mcp__github__*`.
+
+**Do not delete the install directory afterwards.** It is not build output: the
+profile reaches the bundle through that junction, so removing it drops every
+`mcp__github__*` tool until you reinstall. Leave a marker file in it saying so.
 
 ## Choosing a token source
 
