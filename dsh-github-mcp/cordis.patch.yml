@@ -16,6 +16,11 @@
 # into process.env, so form 2 requires a real user-level environment variable.
 # `!!js` expressions are evaluated synchronously, which is why neither form can
 # read the credential store with `await` here.
+#
+# WARNING when reinstalling from a profile copy: this committed file is form 2 and
+# carries no token. Reinstalling a bundle from this directory would replace the
+# working row with a token-less one. Install from a copy that carries the token,
+# and switch them together with the GITHUB_TOKEN environment variable.
 - insert:
     - id: github-mcp
       name: '@deepseek-ai/dsh-mcp-client'
